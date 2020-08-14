@@ -5,6 +5,16 @@
 #include <math.h>
 
 
+static float tmove = 0;
+static float bmove = 0;
+static float cloud1 = -20;
+static float cloud2 = -60;
+static float cloud3 = -80;
+static float cloud4 = -110;
+static float cloud5 = -130;
+static float birdmove1 = 5;
+static float birdmove2 = -5;
+
 void delay(){
     for(int i=0;i<100000000;i++);
 }
@@ -22,6 +32,156 @@ void circle(GLfloat rx, GLfloat ry, GLfloat x, GLfloat y)
     }
     glEnd();
 }
+
+
+
+void birMove1()
+{   //left to right
+    birdmove1 -= .5;
+    if(birdmove1 <-100){
+        birdmove1 = 5;
+   }
+    glutPostRedisplay();
+}
+
+void birdMove2()
+{
+    //left to right
+    birdmove2 += .5;
+    if(birdmove2 >100){
+        birdmove2 = 5;
+   }
+    glutPostRedisplay();
+
+}
+
+
+void trainMove()
+{
+    tmove  -= 0.5 ;
+    if (tmove <-60){
+        tmove = 0;
+    }
+    glutPostRedisplay();
+}
+void boatMove()
+{
+    bmove -= 0.5;
+    if(bmove<-50){
+        bmove = 0;
+    }
+    glutPostRedisplay();
+}
+static float smallboat = 0;
+void smallBoatMove()
+{
+    smallboat += 0.1;
+    if(smallboat>.5){
+        smallboat = 0;
+    }
+    glutPostRedisplay();
+}
+
+
+void cloudMove()
+{
+    cloud1 += .7;
+    if(cloud1 > 200){
+        cloud1 = -20;
+    }
+    glutPostRedisplay();
+    cloud2 += .5;
+    if(cloud2 > 200){
+        cloud2 = -60;
+    }
+    glutPostRedisplay();
+    cloud3 += .5;
+    if(cloud3 > 200){
+        cloud3 = -80;
+    }
+    glutPostRedisplay();
+    cloud4 += .4;
+    if(cloud4 > 200){
+        cloud4 = -110;
+    }
+    glutPostRedisplay();
+    glutPostRedisplay();
+    cloud5 += .5;
+    if(cloud5 > 200){
+        cloud4 = -130;
+    }
+    glutPostRedisplay();
+}
+
+
+
+static float orange1= 0;
+static float orange2= 1;
+static float orange3= 1;
+static float orange4= 0;
+static float orange5= 1;
+static float orange6= 1;
+void Orange()
+{
+    orange1 -= .5;
+    if(orange1<-29){
+        orange1=0;
+    }
+    orange2 -= .5;
+    if(orange2<-30){
+        orange2=0;
+    }
+    orange3 -= .5;
+    if(orange3<-30){
+        orange3=0;
+    }orange4 -= .5;
+    if(orange4<-30){
+        orange4=0;
+    }
+    orange5 -= .3;
+    if(orange5<-30){
+        orange5=0;
+    }
+    orange6 -= .3;
+    if(orange6<-30){
+        orange6=0;
+    }
+    glutPostRedisplay();
+}
+void orangeFall()
+{
+    glColor3ub(255,165,0);
+    Orange();
+    glPushMatrix();
+        glTranslated(0, orange1, 0);
+        circle(.5,1,33,37);
+            glPopMatrix();
+    glPushMatrix();
+        glTranslated(0, orange2, 0);
+        circle(.5,1,35,39);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0, orange3, 0);
+        circle(.5,1,38,41);
+        //circle(.5,1,41,39);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(0, orange4, 0);
+        circle(.5,1,41,39);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0, orange5, 0);
+        circle(.5,1,43,41);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0, orange6, 0);
+        circle(.5,1,45,39);
+    glPopMatrix();
+}
+
 
 void boat(int x1, int y1, int boatLength)
 {
@@ -71,8 +231,6 @@ void boat(int x1, int y1, int boatLength)
         glVertex2d(x4-3,y5+2.3);
         glVertex2d(x4-2.8,y5+2);
     glEnd();
-
-
 }
 
 
@@ -269,11 +427,7 @@ void boat2()
         glVertex2d(x1, y2+1);
     glEnd();
 
-
-
 }
-
-
 
 
 void tree1(float x1, float y1)
@@ -300,11 +454,7 @@ void tree1(float x1, float y1)
         glVertex2d(x1+1, y1-14);
         glVertex2d(x2-1, y1-14);
         glVertex2d(x2-1.5, y1-8);
-
-
     glEnd();
-
-
 }
 
 void tree2(float x1, float y1)
@@ -332,7 +482,6 @@ void tree2(float x1, float y1)
         glVertex2d(x2-1.5, y1-18);
         glVertex2d(x2-2, y1-10);
     glEnd();
-
 }
 
 void tree3(float x1, float y1)
@@ -371,11 +520,7 @@ void tree3(float x1, float y1)
         glVertex2d(x1+.4, y1-20);
         glVertex2d(x2-.4, y1-20);
         glVertex2d(x2-.7, y1-12);
-
-
     glEnd();
-
-
 }
 
 
@@ -419,11 +564,7 @@ void tree4(float x1, float y1)
         glVertex2d(x1+.5, y1-17);
         glVertex2d(x2-.5, y1-17);
         glVertex2d(x2-.7, y1-10);
-
-
     glEnd();
-
-
 }
 void house1(int x, int y)
 {
@@ -472,7 +613,6 @@ void house1(int x, int y)
         glVertex2f(x+2.2,y-1.7);//4.2,58.3
         glVertex2f(x+1.5,y-1.3);//3.5,58.7
     glEnd();
-    glFlush();
 }
 
 void house2(int x, int y)
@@ -518,11 +658,11 @@ void house2(int x, int y)
         glVertex2f(x+2.2,y-1.7);//4.2,58.3
         glVertex2f(x+1.5,y-1.3);//3.5,58.7
     glEnd();
-    glFlush();
 }
 
 void bird1(int x, int y)
 {
+
     //feater
     glColor3ub(206, 69, 19);
     glBegin(GL_QUADS);
@@ -576,7 +716,34 @@ void bird1(int x, int y)
         glVertex2f(x+3,y-8);
         glVertex2f(x+3,y-6.5);
     glEnd();
-    glFlush();
+    glColor3f(1,90,.12);
+    glBegin(GL_TRIANGLES);
+    //1 red front
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2.5,y-8);
+        glVertex2f(x+.5,y-8.5);
+
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2,y-8);
+        glVertex2f(x+1.5,y-8.9);
+
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2,y-8);
+        glVertex2f(x+2.5,y-8.9);
+
+    //1 red rear leg
+        glVertex2d(x+2.5,y-8);
+        glVertex2d(x+3,y-8);
+        glVertex2d(x+2,y-8.8);
+
+        glVertex2d(x+2.5,y-8);
+        glVertex2d(x+3,y-8);
+        glVertex2d(x+2.9,y-9.4);
+
+        glVertex2d(x+2.5,y-8);
+        glVertex2d(x+3,y-8);
+        glVertex2d(x+4,y-9);
+    glEnd();
 }
 void bird2(int x, int y)
 {
@@ -633,7 +800,293 @@ void bird2(int x, int y)
         glVertex2f(x+3.2,y-8);
         glVertex2f(x+3.2,y-6.5);
     glEnd();
-    glFlush();
+
+    glBegin(GL_TRIANGLES);
+        glColor3f(1,.3,0);
+        //1 red front
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2.5,y-8);
+        glVertex2f(x+.5,y-8.5);
+
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2,y-8);
+        glVertex2f(x+1.5,y-8.9);
+
+        glVertex2f(x+1.5,y-8);
+        glVertex2f(x+2,y-8);
+        glVertex2f(x+2.5,y-8.9);
+
+    //1 red rear leg
+        glVertex2d(x+2.7,y-8);
+        glVertex2d(x+3.2,y-8);
+        glVertex2d(x+2,y-8.8);
+
+        glVertex2d(x+2.7,y-8);
+        glVertex2d(x+3.2,y-8);
+        glVertex2d(x+2.9,y-9.4);
+
+        glVertex2d(x+2.7,y-8);
+        glVertex2d(x+3.2,y-8);
+        glVertex2d(x+4,y-9);
+    glEnd();
+}
+
+
+void Plane1()
+{
+    glBegin(GL_POLYGON);
+    glColor3ub(33,69,200);
+        glVertex2f(88,90);
+        glVertex2f(92,90);
+        glVertex2f(93,94);
+        glVertex2f(88,92);
+        glVertex2f(86,90);
+    glEnd();
+    glColor3f(1,1,1);
+    circle(.2,.3,88.5,91);
+    circle(.2,.3,89.5,91);
+    circle(.2,.3,90.5,91);
+    glColor3f(1,0,0);
+    circle(.2,.3,92.5,93.4);
+}
+
+void Plane2()
+{
+    //left one
+    glBegin(GL_POLYGON);
+    glColor3ub(33,69,200);
+
+        glVertex2f(3,84);
+        glVertex2f(4,80);
+        glVertex2f(8,80);
+        glVertex2f(10,80);
+        glVertex2f(8,82);
+
+    glEnd();
+
+    glColor3f(1,1,1);
+    circle(.2,.3,5,81.2);
+    circle(.2,.3,6.4,81.2);
+    circle(.2,.3,7.8,81.2);
+    glColor3f(1,0,0);
+    circle(.2,.3,3.5,83.4);
+
+
+}
+
+static float pl1 = 5;
+static float pl2 = -5;
+
+void planemove()
+{
+    pl1 -= 1;
+    if(pl1 < -100)
+        pl1 = 5;
+    glutPostRedisplay();
+
+    pl2 += 1;
+    if(pl2 >100)
+        pl2 = 5;
+    glutPostRedisplay();
+}
+
+void planeMove()
+{
+    planemove();
+    glPushMatrix();
+        glTranslated(pl1,0,0);
+        Plane1();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(pl2,0,0);
+        Plane2();
+    glPopMatrix();
+}
+
+//diagonal bird move
+//static float birdmove3 = 10;
+static float xx = 0;
+static float yy = 0;
+static float txx = 0;
+static float tyy = 0;
+void birdMove()
+{
+    xx -= 1;
+    glutPostRedisplay();
+
+    yy += .8;
+    glutPostRedisplay();
+
+    tyy += .8;
+    glutPostRedisplay();
+
+    txx += 1;
+    glutPostRedisplay();
+}
+
+void diagonalBirdMove()
+{
+    birdMove();
+    glPushMatrix();
+        glTranslated(xx+1,yy+3,0);
+        bird1(32,48);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslated(txx+1,tyy,0);
+        bird2(42,49);
+    glPopMatrix();
+
+}
+
+
+static float r1= 0;
+static float r2= 10;
+static float r3= 20;
+static float r4= 30;
+static float r5= 40;
+static float r6= 50;
+static float r7= 60;
+static float r8= 70;
+static float r9= 80;
+static float r10= 90;
+static float r11= 100;
+static float r12= 110;
+
+void rainfall()
+{
+    r1 -= 1;
+    if(r1 < -100)
+        r1 = 0;
+    glutPostRedisplay();
+
+    r2 -= 1;
+    if(r2 < -100)
+        r2 = 0;
+    glutPostRedisplay();
+
+    r3 -= 1;
+    if(r3 < -100)
+        r3 = 0;
+    glutPostRedisplay();
+
+    r4 -= 1;
+    if(r4 < -100)
+        r4 = 0;
+    glutPostRedisplay();
+
+    r5 -= 1;
+    if(r5 < -100)
+        r5 = 0;
+    glutPostRedisplay();
+
+    r6 -= 1;
+    if(r6 < -100)
+        r6 = 0;
+    glutPostRedisplay();
+
+    r7 -= 1;
+    if(r7 < -100)
+        r7 = 0;
+    glutPostRedisplay();
+
+    r8 -= 1;
+    if(r8 < -100)
+        r8 = 0;
+    glutPostRedisplay();
+
+    r9 -= 1;
+    if(r9 < -100)
+        r9 = 0;
+    glutPostRedisplay();
+
+    r10 -= 1;
+    if(r10 < -100)
+        r10 = 0;
+    glutPostRedisplay();
+    r11 -= 1;
+    if(r11 < -100)
+        r11 = 0;
+    glutPostRedisplay();
+
+    r12 -= 1;
+    if(r12 < -100)
+        r12 = 0;
+    glutPostRedisplay();
+}
+
+void Rain()
+{
+    rainfall();
+    glColor3f(1,1,1);
+    int y = 97;
+    for(int i = 0;i<100;i= i+2){
+        glBegin(GL_LINES);
+        glLineWidth(20);
+        glVertex2d(i,y);
+        glVertex2d(i,y-2);
+    glEnd();
+
+    }
+}
+
+void rainFall()
+{
+    glPushMatrix();
+        glTranslated(0,r1,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r2,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r3,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r4,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r5,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r6,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r7,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r8,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r9,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r10,0);
+        Rain();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslated(0,r11,0);
+        Rain();
+    glPopMatrix();
+
 }
 
 
@@ -657,18 +1110,52 @@ void river()
         glVertex2d(98.5, 55);
 
     glEnd();
-    boat(76,40,7);
-    boat(77,20,6);
-   boat2();
-    glColor3f(1,0,0);
 
-    glFlush();
+    //small boat move
+    smallBoatMove();
+    glPushMatrix();
+        glTranslated(0,smallboat,0);
+        boat(76,40,7);
+        boat(77,20,6);
+    glPopMatrix();
+
+   // boat(76,40,7);
+    //boat(77,20,6);
+   //boat2();
 
 }
 
 
 
+void nightRiver()
+{
+    glColor3ub(36, 51, 94);
 
+    circle(3,5,77.5,50);
+    circle(3,5,78,42);
+    circle(3,5,78.5,35);
+    circle(3,5,79.5,27);
+    circle(3,5,80,20);
+    circle(3,5,80.5,14);
+    circle(3,5,80.5,7);
+
+
+    glBegin(GL_QUADS);
+        glVertex2d(75, 55);
+        glVertex2d(80, 2);
+        glVertex2d(98.5, 2);
+        glVertex2d(98.5, 55);
+
+    glEnd();
+
+    //small boat move
+    smallBoatMove();
+    glPushMatrix();
+        glTranslated(0,smallboat,0);
+        boat(76,40,7);
+        boat(77,20,6);
+    glPopMatrix();
+}
 
 void rightTriangle(float x, float y, float distance,float height)
 {
@@ -690,6 +1177,7 @@ void leftTriangle(float x, float y, float distance,float height)
 void road()
 {
     glColor3f(1, 1, 1);
+    glColor3ub(190,190,190);
     glBegin(GL_QUADS);
         glVertex2d(75, 2);
         glVertex2d(70, 60);
@@ -809,8 +1297,16 @@ void road()
 
     glBegin(GL_POLYGON);
     glColor3ub(104, 92, 62);
-    glVertex2d(71,2);
-    glVertex2d(70.5,2);
+    glVertex2d(69,2);
+    glVertex2d(68.4,2);
+    glVertex2d(68,45);
+    glVertex2d(68.5,45);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glColor3ub(104, 92, 62);
+    glVertex2d(72,2);
+    glVertex2d(71.4,2);
     glVertex2d(68,45);
     glVertex2d(68.5,45);
     glEnd();
@@ -825,20 +1321,80 @@ void road()
 
 
 
-    /*lColor3ub(58, 43, 145);
-    glRectf(61,42,70,46);
-    glColor3ub(62, 48, 127);
-    glRectf(61,42,70,38);
-    glColor3f(1,1,0);
-    //glRectf(62,40,69,36);*/
-
-
-
     //train();
 
 }
 
 
+
+void Cloud()
+{
+    //1
+
+
+/*
+    //2
+    //3
+    //4
+    */
+
+}
+
+void movingCloud()
+{
+    glColor3f(1,1,1);
+    cloudMove();
+    glPushMatrix();
+        glTranslatef(cloud1,1,0);
+        circle(3,5,5,88);
+        circle(3,5,8,91);
+        circle(3,5,12,92);
+        circle(3,5,12,87);
+        circle(3,5,7,85);
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(cloud2,-2,0);
+        circle(3,5,30,88);
+        circle(3,5,33,91);
+        circle(3,5,37,92);
+        circle(3,5,37,87);
+        circle(3,5,32,85);
+
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(cloud3,-3,0);
+        circle(3,5,5,88);
+        circle(3,5,8,91);
+        circle(3,5,12,92);
+        circle(3,5,12,87);
+        circle(3,5,7,85);
+
+    glPopMatrix();
+    glPushMatrix();
+        glTranslatef(cloud4,1,0);
+        circle(3,5,30,88);
+        circle(3,5,33,91);
+        circle(3,5,37,92);
+        circle(3,5,37,87);
+        circle(3,5,32,85);
+
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(cloud5,1,0);
+        circle(3,5,5,88);
+        circle(3,5,8,91);
+        circle(3,5,12,92);
+        circle(3,5,12,87);
+        circle(3,5,7,85);
+    glPopMatrix();
+
+
+
+
+}
 void sky()
 {
     glColor3ub(14, 138, 239);
@@ -860,7 +1416,7 @@ void sky()
     //cloud left to right
     glColor3f(1, 1, 1);
 
-    //1
+    /*//1
     circle(3,5,5,88);
     circle(3,5,8,91);
     circle(3,5,12,92);
@@ -884,20 +1440,118 @@ void sky()
     circle(2,3,95,84);
     circle(2,3,95,80);
     circle(2,3,92,79);
-    circle(2,3,90,80);
+    circle(2,3,90,80);*/
 
-    bird1(90,95);
-    bird2(7,75);
+    //static cloud
+    circle(3,4,78,71);
+    circle(3,4,75,67);
+    circle(3,4,78,62);
+    circle(3,4,80,65);
 
-    //glFlush();
+
+    //bird1(90,95);
+    //bird2(7,75);
+
+
 
 }
 
+void star(float x1, float y1,float distance, float height)
+{
+    float x2 = x1 + distance, y2 = y1, x3 = x2, y3 = y2 + distance, x4 = x1, y4 = y3;
+
+
+    glBegin(GL_QUADS);
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+
+        glVertex2f(x3, y3);
+        glVertex2f(x4, y4);
+    glEnd();
+   glBegin(GL_TRIANGLES);
+    //bottom
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+        glVertex2f(x1+(distance/2) , y2-height);
+    //right
+        glVertex2f(x2, y2);
+        glVertex2f(x3, y3);
+        glVertex2f(x2+height,y2+(distance/2));
+    //top
+        glVertex2f(x3,y3);
+        glVertex2f(x4,y4);
+        glVertex2f(x1+(distance/2), y4+height);
+    //left
+        glVertex2f(x4,y4);
+        glVertex2f(x1,y1);
+        glVertex2f(x1-height,y1+(distance/2));
+    glEnd();
+
+}
+void nightsky()
+{
+    glColor3ub(6, 0, 45);
+    glBegin(GL_POLYGON);
+        glVertex2d(1.5,60);
+        glVertex2d(1.5, 98);
+        glVertex2d(98.5, 98);
+        glVertex2d(98.5, 60);
+    glEnd();
+    glBegin(GL_QUADS);
+        glVertex2d(70,60);
+        glVertex2d(75,55);
+        glVertex2d(98.5,55);
+        glVertex2d(98.5,60);
+    glEnd();
+
+    glColor3ub(251, 252, 234);
+    //moon
+    circle(4,9,75,85);
+
+    //stars
+    star(5,97,0.4,0.8);
+    star(10,66,0.4,0.8);
+    star(25,90,0.4,0.8);
+    star(30,71,0.4,0.8);
+    star(45,95,0.4,0.8);
+    star(60,75,0.4,0.8);
+    star(76,65,0.4,0.8);
+    star(86,85,0.4,0.8);
+    //circle star
+    circle(.2,.3,2,88);
+    circle(.2,.3,3,68);
+    circle(.2,.3,12,78);
+    circle(.2,.3,24,69);
+    circle(.2,.3,19,97);
+    circle(.2,.3,35,98);
+    circle(.2,.3,32,82);
+    circle(.2,.3,50,73);
+    circle(.2,.3,55,91);
+    circle(.2,.3,68,96);
+    circle(.2,.3,62,66);
+    circle(.2,.3,80,61);
+    circle(.2,.3,81,81);
+    circle(.2,.3,95,98);
+    circle(.2,.3,98,75);
+    circle(.2,.3,96,58);
+
+    //reflected star int the water
+    star(78,53,0.4,0.8);
+    star(85,50,0.4,0.8);
+    star(95,48,0.4,0.8);
+    circle(.2,.3,98,52);
+    circle(.2,.3,83,53);
+    circle(.2,.3,88,54);
+
+    //Plane1();
+    //Plane2();
+    //pale moving
+    planeMove();
+}
+
+
 void homes()
 {
-    //glColor3f(0,1,0);
-    //glColor3ub(190, 190, 190);
-    glColor3ub(22, 58, 21);
     glColor3ub(22, 49, 22);
     glBegin(GL_POLYGON);
         glVertex2d(1.5,60);
@@ -919,25 +1573,6 @@ void homes()
     circle(1,2,51,60);
     circle(2,3,53.5,60);
     circle(2,3,56.5,60);
-
-
-    /*footpath in the village #vertical 1
-    glColor3ub(104, 92, 62);
-    glBegin(GL_QUADS);
-    glVertex2d(19,60);
-    glVertex2d(22,60);
-    glColor3ub(40, 40, 39);
-    glVertex2d(18,7);
-    glVertex2d(15,7);
-
-     glColor3ub(33, 32, 30);
-    glVertex2d(22,60);
-    glVertex2d(22.5,60);
-    glVertex2d(18.5,7);
-    glVertex2d(18,7);
-    glEnd();*/
-
-
 
 
     //footpath in the village #1
@@ -1208,7 +1843,7 @@ void homes()
     circle(3,4,35,34);
 
     //fruits
-    glColor3ub(234, 7, 7);
+    glColor3ub(255, 165, 0);
     circle(.5,1,33,37);
     circle(.5,1,35,39);
     circle(.5,1,38,41);
@@ -1222,9 +1857,11 @@ void homes()
     circle(.5,1,37,36);
     circle(.5,1,34,33);
     circle(.5,1,36,32);
+    //fruits fall
+    orangeFall();
 
-
-
+    //diagonal Bird Move
+    diagonalBirdMove();
 
 
 
@@ -1236,26 +1873,207 @@ void border()
     glRectf(0.8,1,1,99.5);
     glRectf(0.8,99.5,99.5,99);
     glRectf(99.1,99.5,99.5,1);
+}
+
+
+
+
+void dayMode()
+{
+    delay();
+    glClear(GL_COLOR_BUFFER_BIT);
+     glColor3f(1.0f,1.0f,1.0f);
+
+
+road();
+   sky();
+   //Rain();
+
+   movingCloud();
+   //1st bird left to right
+   birMove1();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove1+i,0,0);
+        bird1(90,95);
+        glPopMatrix();
+    }
+    birdMove2();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove2+i,0,0);
+        bird2(7,75);
+        glPopMatrix();
+    }
+   homes();
+
+    trainMove();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(0,tmove+i,0);
+        train();
+        glPopMatrix();
+    }
+
+     river();
+     boatMove();
+     for(int i = 0; i < 1; i++){
+        glPushMatrix();
+        glTranslatef(0, bmove +1, 0);
+        boat2();
+        glPopMatrix();
+     }
+
+     border();
+   glFlush();
+
+}
+
+void rainyMode()
+{
+
+    delay();
+    glClear(GL_COLOR_BUFFER_BIT);
+     glColor3f(1.0f,1.0f,1.0f);
+
+
+road();
+   sky();
+   //Rain();
+
+   movingCloud();
+   //1st bird left to right
+   birMove1();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove1+i,0,0);
+        bird1(90,95);
+        glPopMatrix();
+    }
+    birdMove2();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove2+i,0,0);
+        bird2(7,75);
+        glPopMatrix();
+    }
+   homes();
+
+    trainMove();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(0,tmove+i,0);
+        train();
+        glPopMatrix();
+    }
+
+     river();
+     boatMove();
+     //for(int i = 0; i < 1; i++){
+        glPushMatrix();
+        glTranslatef(0, bmove +1, 0);
+        boat2();
+        glPopMatrix();
+     //}
+
+     border();
+
+    rainFall();
     glFlush();
 
 }
 
 
 
-
-void display()
+void nightMode()
 {
-
-    //glClearColor(0.0,0.0,0.0,0);
-    glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
     delay();
-    border();
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0f,1.0f,1.0f);
+
+
     road();
-    sky();
-    river();
-    homes();
+    nightsky();
+    birMove1();
+    for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove1+i,0,0);
+        bird1(90,95);
+        glPopMatrix();
+    }
+
+    birdMove2();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(birdmove2+i,0,0);
+        bird2(7,75);
+        glPopMatrix();
+    }
+   homes();
+
+    trainMove();
+   for(int i =0; i<1;i++){
+        glPushMatrix();
+        glTranslatef(0,tmove+i,0);
+        train();
+        glPopMatrix();
+    }
+
+     nightRiver();
+     boatMove();
+     //for(int i = 0; i < 1; i++){
+        glPushMatrix();
+        glTranslatef(0, bmove +1, 0);
+        boat2();
+        glPopMatrix();
+     //}
+
+     border();
+
     glFlush();
 
+}
+
+
+void my_keyboard(unsigned char key,int x, int y)
+{
+
+	switch (key) {
+
+		case 'r':
+			rainyMode();
+			break;
+
+		case 'n':
+            nightMode();
+
+			break;
+
+
+		case 'd':
+			 dayMode();
+			 break;
+
+	  default:
+			break;
+	}
+}
+
+void my_mouse(int button, int state, int x, int y)
+{
+   switch (button) {
+      case GLUT_LEFT_BUTTON:
+         if (state == GLUT_DOWN)
+            glutIdleFunc(rainyMode);
+         break;
+      case GLUT_MIDDLE_BUTTON:
+      case GLUT_RIGHT_BUTTON:
+         if (state == GLUT_DOWN)
+			glutIdleFunc(nightMode);
+          break;
+      default:
+         break;
+   }
 }
 
 
@@ -1272,7 +2090,9 @@ int main()
 	glutInitWindowPosition (0, 0);
 	glutCreateWindow ("Dream_Village");
 	init();
-	glutDisplayFunc(display);
+	glutDisplayFunc(dayMode);
+	glutKeyboardFunc(my_keyboard);
+	glutMouseFunc(my_mouse);
 	glutMainLoop();
 	return 0;
 }
